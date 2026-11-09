@@ -2,90 +2,52 @@
 
 **Красивый лаунчер Minecraft на Rust (egui / eframe)**
 
-Современный тёмный интерфейс, кастомная тема, страницы: Главная, Версии, Моды, Скины, Аккаунты, Настройки.
+Современный тёмный интерфейс, реальная загрузка версий, установка client/libraries/assets, запуск Java, каталог модов Modrinth, скины, инстансы, сохранение настроек.
 
-> Это **скелет / прототип**. Полная реализация скачивания, запуска, авторизации Microsoft, модлоадеров и 3D-превью скинов — объёмная задача. Структура и UI уже готовы для расширения.
+Репозиторий: https://github.com/ZeeinJordansky/My-launcher
 
-## Возможности (текущий статус)
+## Возможности v0.2.0
 
-| Функция                    | Статус          |
-|---------------------------|-----------------|
-| Красивый тёмный UI        | ✅ Готово       |
-| Навигация по страницам    | ✅              |
-| Список версий (Mojang API)| ✅ (загрузка)   |
-| Создание инстансов        | 🟡 Заглушка    |
-| Запуск Minecraft          | 🟡 Заглушка    |
-| Каталог модов (Modrinth)  | 🟡 Заглушка    |
-| Редактор / загрузка скинов| 🟡 Заглушка    |
-| Настройки (память, Java)  | ✅ UI           |
-| Microsoft Auth            | 🟡 Заглушка    |
-| Оффлайн-режим             | ✅              |
-| Inno Setup установщик     | ✅ Скрипт       |
-
-## Скриншоты / UI
-
-- Боковая панель с навигацией
-- Карточки инстансов
-- Список версий с фильтром и снапшотами
-- Кастомные цвета (teal accent на тёмном фоне)
-- Скруглённые карточки и кнопки
+| Функция | Статус |
+|---------|--------|
+| Красивый тёмный UI + кастомная тема | ✅ |
+| Список версий (Mojang piston-meta) | ✅ |
+| Установка версии (client + libs + natives + assets) | ✅ |
+| Создание / удаление инстансов | ✅ |
+| Запуск Minecraft (offline) | ✅ |
+| Определение Java | ✅ |
+| Каталог модов (Modrinth search) | ✅ |
+| Загрузка локального скина | ✅ |
+| Настройки + сохранение на диск | ✅ |
+| Оффлайн-аккаунт | ✅ |
+| Microsoft Auth | ⚠️ Нужен Azure App |
+| 3D-превью скина | ⏳ |
+| Fabric/Forge | ⏳ |
+| Inno Setup скрипт | ✅ |
 
 ## Сборка
 
 ```bash
-# Требуется Rust (rustup)
 cargo build --release
 ```
 
-Бинарник: `target/release/my-launcher` (Linux/macOS) или `my-launcher.exe` (Windows).
+### Windows-установщик
 
-### Windows + Inno Setup
+1. `cargo build --release` на Windows
+2. Inno Setup 6 → `installer/my-launcher.iss` → Compile
+3. Получите `MyLauncher-Setup-0.2.0.exe`
 
-1. Соберите `cargo build --release`
-2. Установите [Inno Setup 6](https://jrsoftware.org/isinfo.php)
-3. Откройте `installer/my-launcher.iss`
-4. Убедитесь, что путь к `my-launcher.exe` правильный
-5. Compile → получите `MyLauncher-Setup-0.1.0.exe`
+## Использование
 
-## Roadmap (что нужно доделать)
+1. **Версии** → скачать версию (первый раз долго — assets)
+2. **Инстанс** → создаст на главной
+3. **▶ Играть** (нужна Java 17+)
+4. **Моды** — поиск Modrinth
+5. **Скины** — локальный PNG
+6. **Настройки** — память, Java, папка
 
-1. **Полный pipeline запуска**
-   - Скачивание version JSON → client.jar → libraries → assets → natives
-   - Проверка SHA1
-   - Формирование classpath + аргументов
-   - Запуск Java-процесса
-
-2. **Авторизация**
-   - Microsoft OAuth (device code / browser)
-   - Сохранение токенов
-
-3. **Моды**
-   - Modrinth API + CurseForge
-   - Установка в инстанс (Fabric/Forge/Quilt/NeoForge)
-
-4. **Скины**
-   - 3D-превью (через egui или отдельный рендер)
-   - Загрузка на Mojang (требует auth)
-
-5. **Инстансы**
-   - Полноценное создание / редактирование / удаление
-   - Иконки, категории
-
-6. **CI**
-   - GitHub Actions для сборки Windows/Linux/macOS + релиз
-
-## Технологии
-
-- **Rust 2021**
-- **egui + eframe** — нативный immediate-mode GUI
-- **reqwest + tokio** — сеть
-- **serde** — JSON
-- **rfd** — диалоги выбора файлов
+Данные: `~/.local/share/MyLauncher/` (Linux) / `%APPDATA%\\MyLauncher` (Windows)
 
 ## Лицензия
 
 MIT
-
----
-
-Репозиторий: https://github.com/ZeeinJordansky/My-launcher
